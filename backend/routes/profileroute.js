@@ -91,7 +91,7 @@ router.patch('/update/:userId', upload.single('profilepic'), async (req, res) =>
 
 
 // ----- Contact Form (no login required) -----
-router.post("/contactform", async function (req, res) {
+router.post("/api/contact", async function (req, res) {
   try {
     const { name, email, position, bio } = req.body;
 

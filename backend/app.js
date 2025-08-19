@@ -15,7 +15,10 @@ var app = express();
 // app.set('view engine', 'ejs');
 // app.set('views', path.join(__dirname, 'views'));
 app.use(cors({
-  origin: "http://localhost:3001",  // React frontend
+  origin:[
+    "http://localhost:3001",               // local development
+    "https://elegant-muffin-173b17.netlify.app"  // deployed frontend
+  ],
   credentials: true
 }));
 app.use(expressSession({
