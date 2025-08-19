@@ -1,0 +1,8 @@
+router.get('/home1',isLoggedIn,(req,res)=>{
+  res.render("./")
+})
+
+router.post('/login1', passport.authenticate("local",{
+  successRedirect :'/home',
+  failureRedirect :'/'
+}),function(req,res){})
