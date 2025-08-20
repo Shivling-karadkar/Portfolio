@@ -17,7 +17,8 @@ var app = express();
 app.use(cors({
   origin:[
     "http://localhost:3001",               // local development
-    "https://elegant-muffin-173b17.netlify.app"  // deployed frontend
+    "https://elegant-muffin-173b17.netlify.app"  ,// deployed frontend
+    "https://shivlingkaradkar.netlify.app/"
   ],
   credentials: true
 }));
