@@ -1,54 +1,64 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var expressSession=require('express-session');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const expressSession = require('express-session');
 const cors = require('cors');
-var passport=require('passport')
-var profileRouter = require('./routes/profileroute');
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var userModel = require('./routes/users');
+const passport = require('passport');
 
+// Routers
+const profileRouter = require('./routes/profileroute');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const userModel = require('./routes/users');
 
-var app = express();
-// app.set('view engine', 'ejs');
-// app.set('views', path.join(__dirname, 'views'));
-app.use(cors({
-  origin:[
-    "http://localhost:3001",               // local development
-    "https://elegant-muffin-173b17.netlify.app"  ,// deployed frontend
-    "https://shivlingkaradkar.netlify.app/"
+const app = express();
+
+// ----- CORS Setup -----
+const corsOptions = {
+  origin: [
+    "http://localhost:3001",               // local frontend
+    "https://portfolio-1-6xm8.onrender.com", // deployed backend
+    "https://shivlingkaradkar.netlify.app"   // deployed frontend
   ],
-  credentials: true
-}));
-app.use(expressSession({
-    resave:false,
-    saveUninitialized:false,
-    secret:"Pass@123"
-}));
-app.use(passport.initialize());
-app.use(passport.session());
-passport.serializeUser(userModel.serializeUser());
-passport.deserializeUser(userModel.deserializeUser());
+  credentials: true,
+  methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
 
+app.use(cors(corsOptions));
+// Handle preflight requests
+app.options("*", cors(corsOptions));
 
+// ----- Express Setup -----
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// ----- Session & Passport -----
+app.use(expressSession({
+    resave: false,
+    saveUninitialized: false,
+    secret: "Pass@123"
+}));
 
+app.use(passport.initialize());
+app.use(passport.session());
 
+passport.serializeUser(userModel.serializeUser());
+passport.deserializeUser(userModel.deserializeUser());
+
+// ----- Routes -----
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/profile',profileRouter);
+app.use('/profile', profileRouter);
 
-module.exports = app;
-
-const PORT = 5000;
-
+// ----- Start Server -----
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`✅ Server started on http://localhost:${PORT}`);
 });
+
+module.exports = app;
