@@ -11,7 +11,7 @@ const profileRouter = require('./routes/profileroute');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const userModel = require('./routes/users');
-
+const PORT = process.env.PORT || 5000; 
 const app = express();
 
 // ----- CORS Setup -----
@@ -56,9 +56,7 @@ app.use('/users', usersRouter);
 app.use('/profile', profileRouter);
 
 // ----- Start Server -----
-const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`✅ Server started on http://localhost:${PORT}`);
+  console.log(`✅ Server started on port ${PORT}`);
 });
-
 module.exports = app;
