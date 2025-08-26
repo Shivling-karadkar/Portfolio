@@ -17,8 +17,9 @@ const app = express();
 // ----- CORS Setup -----
 const corsOptions = {
   origin: [
-    "http://localhost:3001",               // local frontend
-    "https://portfolio-1-6xm8.onrender.com", // deployed backend
+    "http://localhost:3001",    
+    "https://portfolio-4-gafw.onrender.com",           // local frontend
+    // deployed backend
     "https://shivlingkaradkar.netlify.app"   // deployed frontend
   ],
   credentials: true,
