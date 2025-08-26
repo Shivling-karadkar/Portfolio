@@ -96,8 +96,8 @@ router.post("/api/contact", async function (req, res) {
     const { name, email, position, bio } = req.body;
 
     // 1️⃣ Save form (no user field required)
-    const formsubmit = new formModel({ name, email, position, bio });
-    await formsubmit.save();
+    // const formsubmit = new formModel({ name, email, position, bio });
+    // await formsubmit.save();
 
     // 2️⃣ Setup email transporter
     const nodemailer = require("nodemailer");
